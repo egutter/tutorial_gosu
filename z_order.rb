@@ -1,3 +1,3 @@
 class ZOrder
-  BACKGROUND, STARS, NAVE, UI = *0..3
+  BACKGROUND, STARS, NAVE, FONDO_AYUDA, UI = *0..4
 end
