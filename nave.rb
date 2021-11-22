@@ -1,11 +1,12 @@
 class Nave
 
-  PUNTAJE_MAXIMO = 100
+  PUNTAJE_MAXIMO = 20
 
-  attr_reader :puntaje, :nombre, :posicion_y, :posicion_x
+  attr_reader :puntaje, :nombre, :posicion_y, :posicion_x, :laser, :vidas
 
-  def initialize(nombre, color)
-    @imagen = Gosu::Image.new("media/starfighter.bmp")
+  def initialize(nombre, color, image)
+    # @imagen = Gosu::Image.new("media/starfighter.bmp")
+    @imagen = image
     @sonido = Gosu::Sample.new("media/beep.wav")
     @posicion_x = 0.0
     @posicion_Y = 0.0
@@ -16,6 +17,8 @@ class Nave
     @color = color
     @nombre = nombre
     @vidas = Vidas.new
+    @laser = SinLaser.new
+    @explotada = SinExplosion.new
   end
 
   def gano?
@@ -26,7 +29,23 @@ class Nave
     if choco_con?(otra_nave)
       self.perder_vida
       otra_nave.perder_vida
+      self.explotar
+      otra_nave.explotar
     end
+  end
+
+  def resolver_disparo(otra_nave)
+    if choco_con?(otra_nave.laser)
+      self.perder_vida
+      self.explotar
+      otra_nave.terminar_disparo
+      return true
+    end
+    return false
+  end
+
+  def explotar
+    @explotada = Explosion.new(self)
   end
 
   def sin_vidas?
@@ -40,12 +59,14 @@ class Nave
   def volver_empezar
     @puntaje = 0
     @vidas.reiniciar
+    @explotada = SinExplosion.new
   end
 
   def posicion_inicial
     @velocidad_x = 0.0
     @velocidad_y = 0.0
     @angulo = 0.0
+    @explotada = SinExplosion.new
   end
 
   def posicion(x, y)
@@ -78,11 +99,17 @@ class Nave
 
     @velocidad_x *= 0.95
     @velocidad_y *= 0.95
+    @laser = @laser.mover
+  end
+
+  def disparar
+    @laser = @laser.nuevo_laser(@posicion_x, @posicion_y, @angulo, @color)
   end
 
   def dibujar
-    @imagen.draw_rot(@posicion_x, @posicion_y, ZOrder::NAVE, @angulo, 0.5, 0.5, 1, 1, @color)
-    @vidas.dibujar
+    @imagen.draw_rot(@posicion_x, @posicion_y, ZOrder::NAVE, @angulo, 0.5, 0.5, 1, 1)#, @color)
+    @laser.dibujar
+    @explotada.dibujar
   end
 
   def comer_estrellas(estrellas)
@@ -101,6 +128,10 @@ class Nave
     @vidas.cantidad
   end
 
+  def terminar_disparo
+    @laser = SinLaser.new
+  end
+
   private
 
   def choco_con?(otro_elemento)
@@ -108,5 +139,41 @@ class Nave
                   @posicion_y,
                   otro_elemento.posicion_x,
                   otro_elemento.posicion_y) < 35
+  end
+end
+
+class Imperio < Nave
+  DESTROYER = "destroyer.png"
+  T_FIGHTER = "tie-fighter.png"
+  NAVES = [DESTROYER, T_FIGHTER]
+  def initialize(nombre)
+    @ultima_nave = rand(2)
+    nave = NAVES[@ultima_nave]
+    super(nombre, Gosu::Color::RED.dup, Gosu::Image.new("media/#{nave}"))
+  end
+
+  def volver_empezar
+    super
+    @ultima_nave = (@ultima_nave+1)%2
+    nave = NAVES[@ultima_nave]
+    @imagen = Gosu::Image.new("media/#{nave}")
+  end
+end
+class Resistencia < Nave
+  FALCON = "falcon.gif"
+  XWING = "xwing.png"
+  NAVES = [FALCON, XWING]
+
+  def initialize(nombre)
+    @ultima_nave = rand(2)
+    nave = NAVES[@ultima_nave]
+    super(nombre, Gosu::Color::BLUE.dup, Gosu::Image.new("media/#{nave}"))
+  end
+
+  def volver_empezar
+    super
+    @ultima_nave = (@ultima_nave+1)%2
+    nave = NAVES[@ultima_nave]
+    @imagen = Gosu::Image.new("media/#{nave}")
   end
 end

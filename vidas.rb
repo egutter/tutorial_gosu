@@ -1,13 +1,11 @@
 class Vidas
   def initialize
-    @posicion_x = 10
-    @posicion_y = 110
     reiniciar
   end
 
-  def dibujar
+  def dibujar(posicion_x, posicion_y)
     @imagenes_de_corazon.each_with_index do |corazon, index|
-      corazon.draw(@posicion_x, @posicion_y + (index*50), ZOrder::UI)
+      corazon.draw(posicion_x + (index*50), posicion_y, ZOrder::UI)
     end
   end
 
