@@ -1,6 +1,6 @@
 class Nave
 
-  PUNTAJE_MAXIMO = 20
+  PUNTAJE_MAXIMO = 1000
 
   attr_reader :puntaje, :nombre, :posicion_y, :posicion_x, :laser, :vidas
 

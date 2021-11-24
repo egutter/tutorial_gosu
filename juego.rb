@@ -3,6 +3,7 @@ require_relative './tablero'
 require_relative './fondo'
 require_relative './anuncios'
 require_relative './pantalla_ayuda'
+require_relative './pantalla_juego'
 require_relative './control_del_juego'
 require_relative './nave'
 require_relative './z_order'
@@ -45,6 +46,8 @@ class Juego < Gosu::Window
 
     @tablero = Tablero.new(@nave_jugador_1, @nave_jugador_2)
     @pantalla_ayuda = PantallaAyuda.new
+    @pantalla_juego = PantallaJuego.new(@fondo, @nave_jugador_1, @nave_jugador_2, @tablero, @control_de_juego, @anuncios)
+    @pantalla_actual = @pantalla_juego
   end
 
   def update
@@ -63,28 +66,7 @@ class Juego < Gosu::Window
   end
 
   def draw
-    # @pantalla_actual.dibujar
-
-    @fondo.dibujar
-    @nave_jugador_1.dibujar
-    @nave_jugador_2.dibujar
-    @tablero.dibujar
-
-    if @control_de_juego.ganador?
-      @anuncios.anunciar_ganador(@control_de_juego.ganador.nombre)
-    end
-
-    if @control_de_juego.disparo_acertado?
-      @anuncios.anunciar_disparo(@control_de_juego.disparo_acertado.nombre)
-    end
-
-    if @control_de_juego.colision?
-      @anuncios.anunciar_choque
-    end
-
-    if @control_de_juego.fin_juego?
-      @anuncios.anunciar_fin_juego
-    end
+    @pantalla_actual.dibujar
   end
 
   def button_down(id)
@@ -96,6 +78,8 @@ class Juego < Gosu::Window
       restart
     elsif boton_ayuda?(id)
       ayuda
+    elsif boton_salir_ayuda?(id)
+      salir_ayuda
     else
       super
     end
@@ -134,13 +118,24 @@ class Juego < Gosu::Window
     id == Gosu::KB_H
   end
 
+  def boton_salir_ayuda?(id)
+    id == Gosu::KB_J
+  end
+
   def tecla?(tecla)
     Gosu.button_down? tecla
   end
 
   def ayuda
     @pantalla_actual = @pantalla_ayuda
+    @control_de_juego.pausar_juego
   end
+
+  def salir_ayuda
+    @pantalla_actual = @pantalla_juego
+    @control_de_juego.continuar_juego
+  end
+
 
   def restart
     iniciar_elementos

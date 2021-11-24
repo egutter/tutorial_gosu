@@ -57,6 +57,14 @@ class ControlDelJuego
     @disparo_acertado = false
   end
 
+  def pausar_juego
+    @pausar_juego = true
+  end
+
+  def continuar_juego
+    @pausar_juego = false
+  end
+
   private
 
   def gano_el_jugador(nave_con_puntos, nave_sin_vidas)
