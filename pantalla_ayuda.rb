@@ -2,11 +2,13 @@ require_relative './texto_utiles'
 class PantallaAyuda
   include TextoUtiles
 
-  COLOR_AYUDA = Gosu::Color::WHITE.dup
+  COLOR_AYUDA = Gosu::Color::YELLOW.dup
   COLOR_FONDO = Gosu::Color::BLACK.dup
-
+  COLOR_COMO_JUGAR = Gosu::Color::RED.dup
+  COLOR_DIFICULTAD = Gosu::Color::GREEN.dup
+  COLOR_NAVES = Gosu::Color::BLUE.dup
   def initialize
-    @titulo = Gosu::Font.new(100)
+    @titulo = Gosu::Font.new(100, {name: 'fonts/Stjldbl1.ttf'})
     @explacion = Gosu::Font.new(40)
   end
 
@@ -15,10 +17,10 @@ class PantallaAyuda
                    Juego::PANTALLA_ANCHO-20,
                    Juego::PANTALLA_ALTO-20, COLOR_FONDO, ZOrder::FONDO_AYUDA)
 
-    texto = "AYUDA"
+    texto = "ayuda"
     @titulo.draw_text(texto,
                       centrar_texto(@titulo, texto),
-                      20,
+                      5,
                       ZOrder::UI, 1.0, 1.0, COLOR_AYUDA)
 
     texto = "Teclas Jugador 1" 
@@ -46,11 +48,20 @@ class PantallaAyuda
                       centrar_texto(@explacion, texto),
                       300,
                       ZOrder::UI, 1.0, 1.0, COLOR_AYUDA)                  
-    texto = "Disparo: Z" 
+    agregar_texto("Disparo: Z", 340)                                  
+    agregar_texto("Como Jugar:", 400, COLOR_COMO_JUGAR)
+    agregar_texto("Objetivo: cada jugador tiene que llegar a los 1.000 puntos", 440, COLOR_COMO_JUGAR)
+    agregar_texto("Como ganar puntos: cada jugador tiene que comer estrellas, cada estrella suma 10 puntos", 480, COLOR_COMO_JUGAR)
+    agregar_texto("Dificultad:", 560, COLOR_DIFICULTAD)
+    agregar_texto("cada nave puede tirar un disparo, si te toca un disparo perdes una vida", 600, COLOR_DIFICULTAD)
+    agregar_texto("si chocan cada jugador pierde una vida", 640, COLOR_DIFICULTAD)
+    agregar_texto("cada ves que vuelven a jugar las naves cambian", 680, COLOR_NAVES)
+  end
+
+  def agregar_texto(texto, posicion_y, color = COLOR_AYUDA)
     @explacion.draw_text(texto,
-                      centrar_texto(@explacion, texto),
-                      340,
-                      ZOrder::UI, 1.0, 1.0, COLOR_AYUDA)                                            
-                  
+      centrar_texto(@explacion, texto),
+      posicion_y,
+      ZOrder::UI, 1.0, 1.0, color)
   end
 end

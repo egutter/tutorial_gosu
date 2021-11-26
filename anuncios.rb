@@ -20,7 +20,7 @@ class Anuncios
                               centrar_texto(@titulo_ganador, texto),
                               Juego::MITAD_PANTALLA_ALTO-50,
                               ZOrder::UI, 1.0, 1.0, COLOR_GANADOR)
-    texto = "Toca R para empezar de nuevo"
+    texto = "Tocá R para empezar de nuevo"
     @titulo_continuar.draw_text(texto,
                                 centrar_texto(@titulo_continuar, texto),
                                 100,
@@ -31,9 +31,9 @@ class Anuncios
     texto = "La nave de #{nombre_herido} recibio un disparo"
     @titulo_recibio_disparo.draw_text(texto,
                                       centrar_texto(@titulo_recibio_disparo, texto),
-                                      130,
+                                      140,
                                       ZOrder::UI, 1.0, 1.0, COLOR_FIN_JUEGO)
-    texto = "Toca C para continuar"
+    texto = "Tocá C para continuar"
     @titulo_continuar.draw_text(texto,
                                 centrar_texto(@titulo_continuar, texto),
                                 210,
@@ -47,7 +47,7 @@ class Anuncios
                                 centrar_texto(@titulo_fin_juego, texto),
                                 130,
                                 ZOrder::UI, 1.0, 1.0, COLOR_FIN_JUEGO)
-    texto = "Toca C para continuar"
+    texto = "Tocá C para continuar"
     @titulo_continuar.draw_text(texto,
                                 centrar_texto(@titulo_continuar, texto),
                                 210,
@@ -56,7 +56,7 @@ class Anuncios
   end
 
   def anunciar_fin_juego
-    texto = "Se quedaron sin vidas. Toca R para empezar de nuevo"
+    texto = "Se quedaron sin vidas. Tocá R para empezar de nuevo"
     @titulo_continuar.draw_text(texto,
                                 centrar_texto(@titulo_continuar, texto),
                                 100,
