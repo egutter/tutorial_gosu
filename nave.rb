@@ -3,7 +3,8 @@ class Nave
   PUNTAJE_MAXIMO = 1000
 
   attr_reader :puntaje, :nombre, :posicion_y, :posicion_x, :laser, :vidas
-
+  attr_writer :nombre
+  
   def initialize(nombre, color, image)
     # @imagen = Gosu::Image.new("media/starfighter.bmp")
     @imagen = image

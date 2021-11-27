@@ -3,6 +3,7 @@ require_relative './tablero'
 require_relative './fondo'
 require_relative './anuncios'
 require_relative './pantalla_ayuda'
+require_relative './pantalla_inicio'
 require_relative './pantalla_juego'
 require_relative './control_del_juego'
 require_relative './nave'
@@ -37,8 +38,8 @@ class Juego < Gosu::Window
     super PANTALLA_ANCHO, PANTALLA_ALTO
     self.caption = "Come estrellas del espacio"
 
-    @nave_jugador_1 = Resistencia.new("Ivan")
-    @nave_jugador_2 = Imperio.new("Emilio")
+    @nave_jugador_1 = Resistencia.new("Jugador 1")
+    @nave_jugador_2 = Imperio.new("Jugador 2")
     @fondo = Fondo.new
     @anuncios = Anuncios.new
     @control_de_juego = ControlDelJuego.new(@nave_jugador_1, @nave_jugador_2)
@@ -46,8 +47,9 @@ class Juego < Gosu::Window
 
     @tablero = Tablero.new(@nave_jugador_1, @nave_jugador_2)
     @pantalla_ayuda = PantallaAyuda.new
+    @pantalla_inicio = PantallaInicio.new(self)
     @pantalla_juego = PantallaJuego.new(@fondo, @nave_jugador_1, @nave_jugador_2, @tablero, @control_de_juego, @anuncios)
-    @pantalla_actual = @pantalla_juego
+    @pantalla_actual = @pantalla_inicio
   end
 
   def update
@@ -72,17 +74,35 @@ class Juego < Gosu::Window
   def button_down(id)
     if boton_escape?(id)
       close
-    elsif boton_restart?(id)
-      restart
-    elsif boton_continuar?(id)
-      restart
-    elsif boton_ayuda?(id)
-      ayuda
-    elsif boton_salir_ayuda?(id)
-      salir_ayuda
     else
+      @pantalla_actual.manejar_boton(self, id)
       super
     end
+  end
+
+  def empezar_juego(nombre_jugador_1, nombre_jugador_2)
+    @nave_jugador_1.nombre = nombre_jugador_1
+    @nave_jugador_2.nombre = nombre_jugador_2
+    self.text_input = nil
+    @pantalla_actual = @pantalla_juego
+    @control_de_juego.continuar_juego
+  end
+
+  def ayuda
+    @pantalla_actual = @pantalla_ayuda
+    @control_de_juego.pausar_juego
+  end
+
+  def salir_ayuda
+    @pantalla_actual = @pantalla_juego
+    @control_de_juego.continuar_juego
+  end
+
+  def restart
+    iniciar_elementos
+    @nave_jugador_1.posicion_inicial
+    @nave_jugador_2.posicion_inicial
+    @control_de_juego.reiniciar
   end
 
   private
@@ -106,43 +126,10 @@ class Juego < Gosu::Window
     id == Gosu::KB_ESCAPE
   end
 
-  def boton_restart?(id)
-    id == Gosu::KB_R
-  end
-
-  def boton_continuar?(id)
-    id == Gosu::KB_C
-  end
-
-  def boton_ayuda?(id)
-    id == Gosu::KB_H
-  end
-
-  def boton_salir_ayuda?(id)
-    id == Gosu::KB_J
-  end
-
   def tecla?(tecla)
     Gosu.button_down? tecla
   end
 
-  def ayuda
-    @pantalla_actual = @pantalla_ayuda
-    @control_de_juego.pausar_juego
-  end
-
-  def salir_ayuda
-    @pantalla_actual = @pantalla_juego
-    @control_de_juego.continuar_juego
-  end
-
-
-  def restart
-    iniciar_elementos
-    @nave_jugador_1.posicion_inicial
-    @nave_jugador_2.posicion_inicial
-    @control_de_juego.reiniciar
-  end
 end
 
 Juego.new.show

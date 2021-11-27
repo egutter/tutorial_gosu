@@ -26,4 +26,28 @@ class PantallaJuego
       @anuncios.anunciar_fin_juego
     end
   end
+
+  def manejar_boton(juego, id)
+    if boton_restart?(id)
+      juego.restart
+    elsif boton_continuar?(id)
+      juego.restart
+    elsif boton_ayuda?(id)
+      juego.ayuda
+    end
+  end
+
+  private
+
+  def boton_restart?(id)
+    id == Gosu::KB_R
+  end
+
+  def boton_continuar?(id)
+    id == Gosu::KB_C
+  end
+
+  def boton_ayuda?(id)
+    id == Gosu::KB_H
+  end
 end

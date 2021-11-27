@@ -45,12 +45,12 @@ class Anuncios
     texto = "Hubo un choque!!!"
     @titulo_fin_juego.draw_text(texto,
                                 centrar_texto(@titulo_fin_juego, texto),
-                                130,
+                                140,
                                 ZOrder::UI, 1.0, 1.0, COLOR_FIN_JUEGO)
     texto = "Tocá C para continuar"
     @titulo_continuar.draw_text(texto,
                                 centrar_texto(@titulo_continuar, texto),
-                                210,
+                                230,
                                 ZOrder::UI, 1.0, 1.0, COLOR_FIN_JUEGO)
 
   end

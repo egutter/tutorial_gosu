@@ -7,7 +7,7 @@ class ControlDelJuego
     @fin_juego = false
     @colision = false
     @disparo_acertado = false
-    @pausar_juego = false
+    @pausar_juego = true
   end
 
   def juego_en_pausa
