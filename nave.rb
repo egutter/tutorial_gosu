@@ -75,11 +75,11 @@ class Nave
   end
 
   def girar_izquierda
-    @angulo -= 4.5
+    @angulo -= 2.5
   end
 
   def girar_derecha
-    @angulo += 4.5
+    @angulo += 2.5
   end
 
   def ascelerar
@@ -146,16 +146,17 @@ end
 class Imperio < Nave
   DESTROYER = "destroyer.png"
   T_FIGHTER = "tie-fighter.png"
-  NAVES = [DESTROYER, T_FIGHTER]
+  DEATH_STAR = "death_star.png"
+  NAVES = [DESTROYER, T_FIGHTER, DEATH_STAR]
   def initialize(nombre)
-    @ultima_nave = rand(2)
+    @ultima_nave = rand(NAVES.size)
     nave = NAVES[@ultima_nave]
     super(nombre, Gosu::Color::RED.dup, Gosu::Image.new("media/#{nave}"))
   end
 
   def volver_empezar
     super
-    @ultima_nave = (@ultima_nave+1)%2
+    @ultima_nave = (@ultima_nave+1)%NAVES.size
     nave = NAVES[@ultima_nave]
     @imagen = Gosu::Image.new("media/#{nave}")
   end
@@ -163,17 +164,18 @@ end
 class Resistencia < Nave
   FALCON = "falcon.gif"
   XWING = "xwing.png"
-  NAVES = [FALCON, XWING]
+  YWING = "y-wing.png"
+  NAVES = [FALCON, XWING, YWING]
 
   def initialize(nombre)
-    @ultima_nave = rand(2)
+    @ultima_nave = rand(NAVES.size)
     nave = NAVES[@ultima_nave]
     super(nombre, Gosu::Color::BLUE.dup, Gosu::Image.new("media/#{nave}"))
   end
 
   def volver_empezar
     super
-    @ultima_nave = (@ultima_nave+1)%2
+    @ultima_nave = (@ultima_nave+1)%NAVES.size
     nave = NAVES[@ultima_nave]
     @imagen = Gosu::Image.new("media/#{nave}")
   end

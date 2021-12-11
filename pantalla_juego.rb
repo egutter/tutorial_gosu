@@ -1,7 +1,7 @@
 class PantallaJuego
 
   def initialize(fondo, nave_jugador_1, nave_jugador_2, tablero, control_de_juego, anuncios)
-    @fondo, @nave_jugador_1, @nave_jugador_2, @tablero, @control_de_juego, @anuncios = fondo, nave_jugador_1, nave_jugador_2, tablero, control_de_juego, anuncios
+    @fondo, @nave_jugador_1, @nave_jugador_2, @tablero, @control_de_juego, @anuncios = fondo, nave_jugador_1, nave_jugador_2, tablero, control_de_juego, anuncios    
   end  
   
   def dibujar
@@ -9,7 +9,6 @@ class PantallaJuego
     @nave_jugador_1.dibujar
     @nave_jugador_2.dibujar
     @tablero.dibujar
-
     if @control_de_juego.ganador?
       @anuncios.anunciar_ganador(@control_de_juego.ganador.nombre)
     end
