@@ -65,7 +65,11 @@ class PantallaInicio
     elsif id == Gosu::MsLeft
       # Mouse click: Select text field based on mouse position.
       if mouse_click_adentro_del_boton?()
-        @juego.empezar_juego(@nombre_jugador_1.text, @nombre_jugador_2.text)
+        if @nombre_jugador_2.text.empty?
+          @juego.empezar_juego_un_jugador_vs_computadora(@nombre_jugador_1.text)
+        else
+          @juego.empezar_juego_dos_jugadores(@nombre_jugador_1.text, @nombre_jugador_2.text)
+        end
       end
     end
   end
