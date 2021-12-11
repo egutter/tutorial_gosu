@@ -65,6 +65,8 @@ class PantallaAyuda
     agregar_texto("una nave cambia a diferentes tipos de naves de la resistencia", 740, COLOR_NAVES)
     agregar_texto("y la otra nave cambia a diferentes tipos de naves del imperio", 780, COLOR_NAVES)
     agregar_texto("j: volver a jugar", 840, COLOR_INICIO)
+    agregar_texto("extras:", 900, COLOR_INICIO)
+    agregar_texto("", 900, COLOR_INICIO)
   end
 
   def manejar_boton(juego, id)
