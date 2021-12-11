@@ -14,6 +14,10 @@ class PantallaAyuda
     @explacion = Gosu::Font.new(40)
   end
 
+  def actualizar
+
+  end
+
   def dibujar
     Gosu.draw_rect(20, 20,
                    Juego::PANTALLA_ANCHO-20,

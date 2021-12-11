@@ -24,6 +24,10 @@ class PantallaInicio
     @boton_jugar = Gosu::Image.new("media/boton_jugar_2.png")
   end
 
+  def actualizar
+
+  end
+
   def dibujar
     Gosu.draw_rect(20, 20,
                    Juego::PANTALLA_ANCHO-20,

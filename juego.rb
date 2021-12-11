@@ -5,6 +5,7 @@ require_relative './anuncios'
 require_relative './pantalla_ayuda'
 require_relative './pantalla_inicio'
 require_relative './pantalla_juego'
+require_relative './pantalla_nivel_dos'
 require_relative './control_del_juego'
 require_relative './nave'
 require_relative './z_order'
@@ -49,22 +50,15 @@ class Juego < Gosu::Window
     @pantalla_ayuda = PantallaAyuda.new
     @pantalla_inicio = PantallaInicio.new(self)
     @pantalla_juego = PantallaJuego.new(@fondo, @nave_jugador_1, @nave_jugador_2, @tablero, @control_de_juego, @anuncios)
+    @panalla_nivel_dos = PantallaNivelDos.new
     @pantalla_actual = @pantalla_inicio
+    # @pantalla_actual = @panalla_nivel_dos
   end
 
   def update
     return if @control_de_juego.juego_en_pausa
 
-    mover_jugador(@nave_jugador_1, TECLAS_JUGADOR_1)
-    mover_jugador(@nave_jugador_2, TECLAS_JUGADOR_2)
-
-    @nave_jugador_1.comer_estrellas(@fondo.estrellas)
-    @nave_jugador_2.comer_estrellas(@fondo.estrellas)
-
-    @fondo.crear_estrellas
-
-    @control_de_juego.resolver_choque_y_disparos
-    @control_de_juego.resolver_ganador
+    @pantalla_actual.actualizar
   end
 
   def draw
@@ -113,21 +107,8 @@ class Juego < Gosu::Window
     @fondo.reiniciar
   end
 
-  def mover_jugador(nave_jugador, teclas)
-    nave_jugador.girar_izquierda if tecla?(teclas[:izquierda])
-    nave_jugador.girar_derecha if tecla?(teclas[:derecha])
-    nave_jugador.ascelerar if tecla?(teclas[:arriba])
-    nave_jugador.retroceder if tecla?(teclas[:abajo])
-    nave_jugador.disparar if tecla?(teclas[:disparar])
-    nave_jugador.mover
-  end
-
   def boton_escape?(id)
     id == Gosu::KB_ESCAPE
-  end
-
-  def tecla?(tecla)
-    Gosu.button_down? tecla
   end
 
 end
