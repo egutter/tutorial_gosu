@@ -8,8 +8,13 @@ class PantallaJuego
   end
 
   def actualizar
-    mover_jugador(@nave_jugador_1, Juego::TECLAS_JUGADOR_1)
-    mover_jugador(@nave_jugador_2, Juego::TECLAS_JUGADOR_2)
+    return if @control_de_juego.juego_en_pausa
+
+    # mover_jugador(@nave_jugador_1, Juego::TECLAS_JUGADOR_1)
+    # mover_jugador(@nave_jugador_2, Juego::TECLAS_JUGADOR_2)
+
+    @nave_jugador_1.mover_jugador()
+    @nave_jugador_2.mover_jugador()
 
     @nave_jugador_1.comer_estrellas(@fondo.estrellas)
     @nave_jugador_2.comer_estrellas(@fondo.estrellas)
@@ -60,14 +65,14 @@ class PantallaJuego
 
   private
 
-  def mover_jugador(nave_jugador, teclas)
-    nave_jugador.girar_izquierda if tecla?(teclas[:izquierda])
-    nave_jugador.girar_derecha if tecla?(teclas[:derecha])
-    nave_jugador.ascelerar if tecla?(teclas[:arriba])
-    nave_jugador.retroceder if tecla?(teclas[:abajo])
-    nave_jugador.disparar if tecla?(teclas[:disparar])
-    nave_jugador.mover
-  end
+  # def mover_jugador(nave_jugador, teclas)
+  #   nave_jugador.girar_izquierda if tecla?(teclas[:izquierda])
+  #   nave_jugador.girar_derecha if tecla?(teclas[:derecha])
+  #   nave_jugador.ascelerar if tecla?(teclas[:arriba])
+  #   nave_jugador.retroceder if tecla?(teclas[:abajo])
+  #   nave_jugador.disparar if tecla?(teclas[:disparar])
+  #   nave_jugador.mover
+  # end
 
   def elegir_cancion
     @cancion_actual ||= rand(CANCIONES.size)
@@ -87,8 +92,8 @@ class PantallaJuego
     id == Gosu::KB_H
   end
 
-  def tecla?(tecla)
-    Gosu.button_down? tecla
-  end
+  # def tecla?(tecla)
+  #   Gosu.button_down? tecla
+  # end
 
 end

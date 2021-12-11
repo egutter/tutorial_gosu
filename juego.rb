@@ -8,6 +8,7 @@ require_relative './pantalla_juego'
 require_relative './pantalla_nivel_dos'
 require_relative './control_del_juego'
 require_relative './nave'
+require_relative './nave_controlada_por_computadora'
 require_relative './z_order'
 require_relative './estrella'
 require_relative './vidas'
@@ -39,25 +40,14 @@ class Juego < Gosu::Window
     super PANTALLA_ANCHO, PANTALLA_ALTO
     self.caption = "Come estrellas del espacio"
 
-    @nave_jugador_1 = Resistencia.new("Jugador 1")
-    @nave_jugador_2 = Imperio.new("Jugador 2")
     @fondo = Fondo.new
-    @anuncios = Anuncios.new
-    @control_de_juego = ControlDelJuego.new(@nave_jugador_1, @nave_jugador_2)
-    iniciar_elementos
-
-    @tablero = Tablero.new(@nave_jugador_1, @nave_jugador_2)
-    @pantalla_ayuda = PantallaAyuda.new
     @pantalla_inicio = PantallaInicio.new(self)
-    @pantalla_juego = PantallaJuego.new(@fondo, @nave_jugador_1, @nave_jugador_2, @tablero, @control_de_juego, @anuncios)
     @panalla_nivel_dos = PantallaNivelDos.new
     @pantalla_actual = @pantalla_inicio
     # @pantalla_actual = @panalla_nivel_dos
   end
 
   def update
-    return if @control_de_juego.juego_en_pausa
-
     @pantalla_actual.actualizar
   end
 
@@ -74,9 +64,28 @@ class Juego < Gosu::Window
     end
   end
 
-  def empezar_juego(nombre_jugador_1, nombre_jugador_2)
-    @nave_jugador_1.nombre = nombre_jugador_1
-    @nave_jugador_2.nombre = nombre_jugador_2
+  def empezar_juego_un_jugador_vs_computadora(nombre_jugador_1)
+    @nave_jugador_1 = Resistencia.new(nombre_jugador_1)
+    @nave_jugador_2 = NaveControladaPorComputadora.new
+    empezar_juego
+  end
+
+  def empezar_juego_dos_jugadores(nombre_jugador_1, nombre_jugador_2)
+    @nave_jugador_1 = Resistencia.new(nombre_jugador_1)
+    @nave_jugador_2 = Imperio.new(nombre_jugador_2)
+    empezar_juego
+  end
+
+  def empezar_juego
+    @anuncios = Anuncios.new
+    @control_de_juego = ControlDelJuego.new(@nave_jugador_1, @nave_jugador_2)
+    iniciar_elementos
+
+    @tablero = Tablero.new(@nave_jugador_1, @nave_jugador_2)
+    @pantalla_ayuda = PantallaAyuda.new
+    @pantalla_juego = PantallaJuego.new(@fondo, @nave_jugador_1, @nave_jugador_2, @tablero, @control_de_juego, @anuncios)
+
+
     self.text_input = nil
     @pantalla_actual = @pantalla_juego
     @control_de_juego.continuar_juego

@@ -133,7 +133,21 @@ class Nave
     @laser = SinLaser.new
   end
 
+  def mover_jugador
+    teclas = Juego::TECLAS_JUGADOR_1
+    self.girar_izquierda if tecla?(teclas[:izquierda])
+    self.girar_derecha if tecla?(teclas[:derecha])
+    self.ascelerar if tecla?(teclas[:arriba])
+    self.retroceder if tecla?(teclas[:abajo])
+    self.disparar if tecla?(teclas[:disparar])
+    self.mover
+  end
+
   private
+
+  def tecla?(tecla)
+    Gosu.button_down? tecla
+  end
 
   def choco_con?(otro_elemento)
     Gosu.distance(@posicion_x,
