@@ -2,11 +2,10 @@ class Nave
 
   PUNTAJE_MAXIMO = 1000
 
-  attr_reader :puntaje, :nombre, :posicion_y, :posicion_x, :laser, :vidas
+  attr_reader :puntaje, :creditos_imperiales, :nombre, :posicion_y, :posicion_x, :laser, :vidas
   attr_writer :nombre
   
   def initialize(nombre, color, image)
-    # @imagen = Gosu::Image.new("media/starfighter.bmp")
     @imagen = image
     @sonido = Gosu::Sample.new("media/beep.wav")
     @posicion_x = 0.0
@@ -15,6 +14,7 @@ class Nave
     @velocidad_y = 0.0
     @angulo = 0.0
     @puntaje = 0
+    @creditos_imperiales = 0
     @color = color
     @nombre = nombre
     @vidas = Vidas.new
@@ -133,8 +133,7 @@ class Nave
     @laser = SinLaser.new
   end
 
-  def mover_jugador
-    teclas = Juego::TECLAS_JUGADOR_1
+  def mover_jugador(teclas)
     self.girar_izquierda if tecla?(teclas[:izquierda])
     self.girar_derecha if tecla?(teclas[:derecha])
     self.ascelerar if tecla?(teclas[:arriba])

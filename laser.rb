@@ -20,8 +20,8 @@ class Laser
     new_move = Gosu.milliseconds / 10
     fuera_pantalla = false
     if @last_move != new_move
-      @velocidad_x += Gosu.offset_x(@angulo, 0.5)
-      @velocidad_y += Gosu.offset_y(@angulo, 0.5)
+      @velocidad_x += Gosu.offset_x(@angulo, 1)
+      @velocidad_y += Gosu.offset_y(@angulo, 1)
       @posicion_x += @velocidad_x
       @posicion_y += @velocidad_y
       @last_move = new_move

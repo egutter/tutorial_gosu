@@ -6,7 +6,7 @@ class Ascelerar
     @nave = nave
     @segundos_para_moverse = rand(5..10)
     @tiempo_de_ejecucion_movimiento = tiempo_actual_en_segundos + @segundos_para_moverse
-    @movimiento = MOVIMIENTOS[rand(3)]
+    @movimiento = MOVIMIENTOS[rand(2)]
   end
 
   def ejecutar
@@ -48,14 +48,13 @@ end
 class Disparo
   def initialize(nave)
     @nave = nave
-    @segundos_para_disparar = rand(2..5)
+    @segundos_para_disparar = rand(1..4)
     @tiempo_espera_para_disparar = tiempo_actual_en_segundos + @segundos_para_disparar
   end
 
   def disparar
     if (tiempo_actual_en_segundos > @tiempo_espera_para_disparar)
       @nave.disparar
-      @segundos_para_disparar = rand(2..5)
       @tiempo_espera_para_disparar = tiempo_actual_en_segundos + @segundos_para_disparar
     end
   end
