@@ -64,7 +64,7 @@ class PantallaInicio
       juego.text_input = @text_fields[nuevo_index]
     elsif id == Gosu::MsLeft
       # Mouse click: Select text field based on mouse position.
-      if mouse_click_adentro_del_boton?()
+      if mouse_click_adentro_de_objeto(@boton_jugar, BOTON_START_X, BOTON_START_Y, @juego)
         if @nombre_jugador_2.text.empty?
           @juego.empezar_juego_un_jugador_vs_computadora(@nombre_jugador_1.text)
         else
@@ -72,16 +72,5 @@ class PantallaInicio
         end
       end
     end
-  end
-
-  def mouse_click_adentro_del_boton?()
-    boton_fin_x = BOTON_START_X + @boton_jugar.width
-    boton_fin_y = BOTON_START_Y + @boton_jugar.height
-    
-    mouse_dentro_boton_x = (@juego.mouse_x >= BOTON_START_X && @juego.mouse_x <= boton_fin_x)
-    mouse_dentro_boton_y = (@juego.mouse_y >= BOTON_START_Y && @juego.mouse_y <= boton_fin_y)
-
-    return mouse_dentro_boton_x && mouse_dentro_boton_y
-
   end
 end

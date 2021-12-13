@@ -75,7 +75,7 @@ class NaveControladaPorComputadora < Imperio
     @movimiento_actual = Girar.new(self)
   end
   
-  def mover_jugador
+  def mover_jugador(_teclas)
     @disparo.disparar
     @movimiento_actual = @movimiento_actual.ejecutar
     self.mover

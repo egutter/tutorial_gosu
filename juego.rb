@@ -6,11 +6,13 @@ require_relative './pantalla_ayuda'
 require_relative './pantalla_inicio'
 require_relative './pantalla_juego'
 require_relative './pantalla_nivel_dos'
+require_relative './pantalla_mercado'
 require_relative './control_del_juego'
 require_relative './nave'
 require_relative './nave_controlada_por_computadora'
 require_relative './z_order'
 require_relative './estrella'
+require_relative './meteorito'
 require_relative './vidas'
 require_relative './laser'
 require_relative './explosion'
@@ -44,6 +46,7 @@ class Juego < Gosu::Window
     @pantalla_inicio = PantallaInicio.new(self)
     @panalla_nivel_dos = PantallaNivelDos.new
     @pantalla_actual = @pantalla_inicio
+    @pantalla_ayuda = PantallaAyuda.new
     # @pantalla_actual = @panalla_nivel_dos
   end
 
@@ -82,7 +85,6 @@ class Juego < Gosu::Window
     iniciar_elementos
 
     @tablero = Tablero.new(@nave_jugador_1, @nave_jugador_2)
-    @pantalla_ayuda = PantallaAyuda.new
     @pantalla_juego = PantallaJuego.new(@fondo, @nave_jugador_1, @nave_jugador_2, @tablero, @control_de_juego, @anuncios)
 
 
@@ -96,6 +98,11 @@ class Juego < Gosu::Window
     @control_de_juego.pausar_juego
   end
 
+  def mercado(nave_jugador)
+    @pantalla_actual = PantallaMercado.new(self, nave_jugador)
+    @control_de_juego.pausar_juego
+  end
+
   def salir_ayuda
     @pantalla_actual = @pantalla_juego
     @control_de_juego.continuar_juego
@@ -106,6 +113,10 @@ class Juego < Gosu::Window
     @nave_jugador_1.posicion_inicial
     @nave_jugador_2.posicion_inicial
     @control_de_juego.reiniciar
+  end
+
+  def activar_meteoritos(cantidad)
+    @fondo.activar_meteoritos(cantidad)
   end
 
   private

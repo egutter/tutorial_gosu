@@ -142,6 +142,14 @@ class Nave
     self.mover
   end
 
+  def ganar_creditos
+    @creditos_imperiales = @creditos_imperiales + 10
+  end
+
+  def restar_credito(monto)
+    @creditos_imperiales = @creditos_imperiales - monto
+  end
+
   private
 
   def tecla?(tecla)

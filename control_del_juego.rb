@@ -27,6 +27,8 @@ class ControlDelJuego
       elsif gano_el_jugador(@nave_jugador_2, @nave_jugador_1)
         @nave_jugador_2
       end
+    
+      @ganador&.ganar_creditos  
   end
 
   def ganador?

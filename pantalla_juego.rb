@@ -57,6 +57,11 @@ class PantallaJuego
       juego.restart
     elsif boton_ayuda?(id)
       juego.ayuda
+    elsif id == Gosu::MsLeft
+      # Mouse click: Select text field based on mouse position.
+      if @tablero.mouse_click_adentro_del_credito_jugador_1?(juego)
+        juego.mercado(@nave_jugador_1)
+      end
     end
   end
 
