@@ -14,10 +14,12 @@ class ControlDelJuego
     (@ganador || @fin_juego || @pausar_juego)
   end
 
-  def resolver_choque_y_disparos
+  def resolver_choque_y_disparos(meteoritos)
     resolver_choque
     resolver_disparo(@nave_jugador_1, @nave_jugador_2)
     resolver_disparo(@nave_jugador_2, @nave_jugador_1)
+    resolver_colision_meteorito(@nave_jugador_1, meteoritos)
+    resolver_colision_meteorito(@nave_jugador_2, meteoritos)
   end
 
   def resolver_ganador
@@ -86,6 +88,16 @@ class ControlDelJuego
       @colision = true
       @pausar_juego = true
       @fin_juego = alguna_nave_se_quedo_sin_vidas?
+    end
+  end
+
+  def resolver_colision_meteorito(nave, meteoritos)
+    if nave.colision_meteorito(meteoritos)
+      nave.explotar
+      nave.perder_vida
+      @colision = true
+      @fin_juego = alguna_nave_se_quedo_sin_vidas?
+      @pausar_juego = true
     end
   end
 

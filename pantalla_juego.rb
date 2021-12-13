@@ -18,7 +18,7 @@ class PantallaJuego
 
     @fondo.crear_estrellas
 
-    @control_de_juego.resolver_choque_y_disparos
+    @control_de_juego.resolver_choque_y_disparos(@fondo.meteoritos)
     @control_de_juego.resolver_ganador
   end
 

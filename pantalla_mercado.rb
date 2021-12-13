@@ -13,10 +13,10 @@ class PantallaMercado
     @juego = juego
     @titulo = Gosu::Font.new(100, {name: 'fonts/Stjldbl1.ttf'})
     @explacion = Gosu::Font.new(40)
-    @meteorito = Gosu::Image.new("media/meteorito.jpeg", :tileable => true)
+    @meteorito = Gosu::Image.new("media/meteorito.png", :tileable => true)
     @nave_jugador = nave_jugador
     @mercancias = [
-      {imagen: @meteorito, x: 300, y: 240, 
+      {imagen: @meteorito, x: 300, y: 240, costo: 10,
         accion: method(:comprar_meteorito) }]
   end
 
@@ -46,8 +46,10 @@ class PantallaMercado
     elsif id == Gosu::MsLeft
       # Mouse click: Select text field based on mouse position.
       if mercancia = mouse_click_sobre_mercancia?
-        mercancia[:accion].call
-        juego.salir_ayuda
+        if mercancia[:costo] <= @nave_jugador.creditos_imperiales
+          mercancia[:accion].call
+          juego.salir_ayuda
+        end
       end
     end
   end

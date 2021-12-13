@@ -125,6 +125,12 @@ class Nave
     end
   end
 
+  def colision_meteorito(meteoritos)
+    meteoritos.any? do |meteorito|
+      choco_con?(meteorito)
+    end
+  end
+
   def cantidad_vidas
     @vidas.cantidad
   end

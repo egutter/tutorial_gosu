@@ -1,11 +1,11 @@
 class Fondo
   MAXIMO_ESTRELLAS = 100
 
-  attr_reader :estrellas
+  attr_reader :estrellas, :meteoritos
 
   def initialize
     @imagen_de_fondo = Gosu::Image.new("media/space.png", :tileable => true)
-    @imagen_meteorito = Gosu::Image.new("media/meteorito.jpeg", :tileable => true)
+    @imagen_meteorito = Gosu::Image.new("media/meteorito_chico.png", :tileable => true)
     @animaciones_estrella = Gosu::Image.load_tiles("media/star.png", 25, 25)
     @estrellas = Array.new
     @meteoritos = Array.new
